@@ -1,0 +1,82 @@
+##########	FLUME	##########
+wget https://fileserver.my-vms.com/EventosSistema.txt	
+flume-ng version
+which flume-ng
+cd /usr/local/apache-flume/conf/
+cp flume.conf flume_tarea.conf
+nano flume_tarea.conf
+flume-ng agent -f /usr/local/apache-flume/conf/flume_tarea.conf -n agent1
+
+### nano Flume command ###
+agent1.sources = tail
+agent1.channels = Channel-2
+agent1.sinks = sink-1
+
+agent1.sources.tail.type = exec
+agent1.sources.tail.command = cat /home/hadoop/EventosSistema.txt
+agent1.sources.tail.channels = Channel-2
+
+agent1.sinks.sink-1.channel = Channel-2
+agent1.sinks.sink-1.type = hdfs
+agent1.sinks.sink-1.hdfs.path = hdfs://localhost:9000/flume01
+agent1.sinks.sink-1.hdfs.fileType = DataStream
+agent1.sinks.sink-1.hdfs.rollInterval = 60
+agent1.sinks.sink-1.hdfs.rollSize = 0
+agent1.sinks.sink-1.hdfs.rollCount = 0
+### nano Flume command ###
+
+
+##########	SIN FLUME	##########
+hadoop fs -put EventosSistema.txt /user/hadoop
+
+##########	HIVE	##########
+sudo su - hadoop
+start-dfs.sh
+start-yarn.sh
+hive --service metastore &
+hive --service hiveserver2 &
+cd $HIVE_HOME
+bin/hive --service hiveserver2 &
+
+firefox: localhost:8000
+
+drop table tarea;
+CREATE TABLE tarea(col string);
+LOAD DATA INPATH '/user/hadoop/EventosSistema.txt' OVERWRITE INTO TABLE tarea;
+select * from tarea limit 10;
+
+drop table EventoSistema;
+CREATE TABLE EventoSistema as SELECT
+        SPLIT(col, '\t')[3] as IDEvento,
+        SPLIT(col, '\t')[2] as Origen,
+        SPLIT(col, '\t')[0] as Nivel,
+        SPLIT(col, '\t')[1] as FechaHora
+from tarea;
+
+select idevento, origen, nivel, fechahora from eventosistema 
+where fechahora is not null limit 10;
+
+select cast(idevento as double) as evento_id, origen, nivel, count(idevento) as conteo from eventosistema 
+where fechahora is not null group by cast(idevento as double), origen, nivel;
+
+
+
+### Con Flume
+CREATE TABLE tarea_flume(col string);
+LOAD DATA INPATH '/flume02/FlumeData.1652494232702' OVERWRITE INTO TABLE tarea_flume;
+
+CREATE TABLE EventoSistema_flume as SELECT
+        SPLIT(col, '\t')[3] as IDEvento,
+        SPLIT(col, '\t')[2] as Origen,
+        SPLIT(col, '\t')[0] as Nivel,
+        SPLIT(col, '\t')[1] as FechaHora
+from tarea_flume;
+
+select idevento, origen, nivel, fechahora from EventoSistema_flume 
+where fechahora is not null;
+
+select cast(idevento as double) as evento_id, origen, nivel, count(idevento) as conteo from EventoSistema_flume 
+where fechahora is not null group by cast(idevento as double), origen, nivel;
+
+
+
