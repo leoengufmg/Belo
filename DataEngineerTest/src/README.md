@@ -49,6 +49,7 @@ Correr las pruebas unitarias y cobertura de código:
 - Leonardo Rodrigues de Andrade
 
 📋 Deploy this project of Web Scrap with AWS
+
 We could use AWS Elastic Beanstalk, which is a fully managed service that makes it easy to deploy, run, and scale web applications and services. 
 Here are the steps:
 - Create an AWS account if you don't already have one.
