@@ -6,13 +6,15 @@ want is not available in the YahooFinance’s API.
 
 ## Proyecto Web Scraping
 📗 libraries Requirements
-- bs4
-- requests
-- pytest
-- lxml
-- numpy
-- pandas
-- pycodestyle
+- bs4: for scrap purpose
+- requests: for scrap purpose
+- pytest: develop unit test
+- lxml: for scrap purpose
+- numpy: work with data frame
+- pandas: work with data frame
+- openpyxl: to save to excel
+- pycodestyle: to follow pep8 standard
+- log4j: to manage the logs during the execution
 
 📗 Requirements for future improvements 
 
@@ -45,6 +47,19 @@ Correr las pruebas unitarias y cobertura de código:
 ✒ Authors ️
 
 - Leonardo Rodrigues de Andrade
+
+📋 Deploy this project of Web Scrap with AWS
+
+We could use AWS Elastic Beanstalk, which is a fully managed service that makes it easy to deploy, run, and scale web applications and services. 
+Here are the steps:
+- Create an AWS account if you don't already have one.
+- Install the AWS Elastic Beanstalk Command Line Interface (CLI) on your local machine. This will allow you to interact with AWS Elastic Beanstalk from the command line.
+- Create a new Elastic Beanstalk application and environment using the AWS Elastic Beanstalk CLI. This will create a new environment where you can deploy your web scraper.
+- Pack your web scraper code and any dependencies into a zip file. This zip file will be uploaded to AWS Elastic Beanstalk as a deployment package.
+- Use the AWS Elastic Beanstalk CLI to deploy your web scraper to the environment you created in step 3.
+- Test your web scraper to ensure that it is running correctly on AWS Elastic Beanstalk.
+
+Obs: Other options include using Amazon EC2, Amazon ECS, and Amazon EKS.
 
 📄 Licence
 
