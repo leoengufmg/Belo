@@ -7,6 +7,26 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import datetime
 
+import logging
+# creating logger
+logger = logging.getLogger(__name__)
+#logger.debug('This is a debug message')
+#logger.info('This is an info message')
+#logger.warning('This is a warning message')
+#logger.error('This is an error message')
+#logger.critical('This is a critical message')
+
+
+def formatting_logs():
+    # formatter of logging
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    # handler
+    handler = logging.FileHandler('app.log')
+    handler.setFormatter(formatter)
+
+    # add handler
+    logger.addHandler(handler)
 
 def get_page(url):
     '''
@@ -104,23 +124,21 @@ def scrape_table_first_attempt(baseurl, tickerslist, tabslist):
     '''
     # Set the current date and time
     scrape_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Defining column name
+    column_name = ["Ticker", "Field", "Value", "End Date", "Scrape Date"]
     data = []
-    for ticker in tickerslist:
+    for ticker in tickers:
         flag = 0
         # define list to store column name and scraped values
-        column_name = []
-        value = []
-        for tab in tabslist:
+        for tab in tabs:
             # Set the URL for the current ticker
-            url = baseurl.format(ticker, tab, ticker)
-            print(url)
+            url = base_url.format(ticker, tab, ticker)
+            # print(url)
 
             # Make a request to the URL
             response = get_page(url)
-
             # Parse the HTML content
             soup = BeautifulSoup(response.text, "html.parser")
-
             # scrape date
             scrape_date = datetime.datetime.now().strftime('%m-%d-%Y')
             # print(scrape_date)
@@ -136,33 +154,33 @@ def scrape_table_first_attempt(baseurl, tickerslist, tabslist):
                 except:
                     print("An exception occurred")
             '''
-            enddate = scrape_date
             table_field = soup.find_all("div", class_="D(tbr) fi-row Bgc($hoverBgColor):h")
             # Find the table containing the financial data
             for i in table_field:
+                value = list()
+                # Append ticker
+                value.append(ticker)
                 aux = 0
                 for j in i:
                     if aux == 0:
-                        column_name.append(j.text)
+                        # append Field
+                        value.append(j.text)
                     if aux == 1:
+                        # append value
                         value.append(j.text)
                     aux += 1
-        column_name.append("Ticker")
-        value.append(ticker)
-        #
-        column_name.append("End Date")
-        value.append(enddate)
-        # value.append(table_EndDate.replace("/", "-"))
-        #
-        column_name.append("Scrape Date")
-        value.append(scrape_date)
-        #
-        # Create a DataFrame with custom column labels
-        temp_list = [value]
-        df = pd.DataFrame(temp_list, columns=column_name)
-        data.append(df)
-    return pd.concat([data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]])
+                    # Append End Date
+                enddate = scrape_date
+                value.append(enddate)
+                # value.append(table_EndDate.replace("/", "-"))
 
+                # Append Scrape Date
+                value.append(scrape_date)
+                #
+                # Create a DataFrame with custom column labels
+                data.append(value)
+    df = pd.DataFrame(data, columns=column_name)
+    return df
 
 if __name__ == "__main__":
     # argparser = argparse.ArgumentParser()
@@ -170,6 +188,7 @@ if __name__ == "__main__":
     # args = argparser.parse_args()
     # ticker = args.ticker
     # Set the tickers and fields to be scrapped
+    formatting_logs()
     tickers = ["JNJ", "BRK.B", "JPM", "MMM", "ABBV", "DIS", "T", "PG", "LOW", "CI"]
     fields = ["Operating Income", "Net Income From Continuing Operations", "Retained Earnings", "Change In Cash",
               "Net Borrowings"]
@@ -177,4 +196,8 @@ if __name__ == "__main__":
 
     base_url = "https://finance.yahoo.com/quote/{}/{}?p={}"
 
-    print(scrape_table_first_attempt(base_url, tickers, tabs))
+    df_result = (scrape_table_first_attempt(base_url, tickers, tabs))
+    date = datetime.date.today().strftime('%Y-%m-%d')
+    writer = pd.ExcelWriter('Yahoo-Finance-Scrape-' + date + '.xlsx')
+    df_result.to_excel(writer)
+    writer.save()
