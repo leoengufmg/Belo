@@ -1,0 +1,196 @@
+[
+    {
+        "domain": "Employee",
+        "action": "AddEmployee",
+        "endpoint": "/sharp/api/employee/add"
+    },
+    {
+        "domain": "Employee",
+        "action": "UpdateEmployee",
+        "endpoint": "/sharp/api/employee/update"
+    },
+    {
+        "domain": "EmployeeUpdate",
+        "action": "UpdateEmployeeUpdate",
+        "endpoint": "/sharp/api/employee/update"
+    },
+    {
+        "domain": "Customer",
+        "action": "AddCustomer",
+        "endpoint": "/sharp/api/customer/add"
+    },
+    {
+        "domain": "Customer",
+        "action": "UpdateCustomerUpdate",
+        "endpoint": "/sharp/api/customer/update"
+    },
+
+    {
+        "domain": "Building",
+        "action": "AddCreateDummyRecordsBuilding",
+        "endpoint": "/sharp/api/building/add?Version=2"
+    },
+
+    {
+        "domain": "Contract",
+        "action": "UpdateContractUpdateDigitalOption",
+        "endpoint": "/sharp/api/contract/update?Version=2"
+    }
+
+    ,
+    
+    {
+        "domain": "Building",
+        "action": "AddBuilding",
+        "endpoint": "/sharp/api/building/add?Version=2"
+    },
+    {
+        "domain": "Building",
+        "action": "UpdateBuilding",
+        "endpoint": "/sharp/api/building/update?Version=2"
+    },
+    {
+        "domain": "Unit",
+        "action": "AddUnit",
+        "endpoint": "/sharp/api/unit/add?Version=2"
+    }
+    ,
+    {
+        "domain": "Unit",
+        "action": "AddCreateDummyRecordsUnit",
+        "endpoint": "/sharp/api/unit/add?Version=2"
+    }
+    ,
+    {
+        "domain": "Unit",
+        "action": "UpdateCreateDummyRecordsUnit_update",
+        "endpoint": "/sharp/api/unit/update?Version=2"
+    }
+    ,
+    {
+        "domain": "MasterContract",
+        "action": "AddMasterContract",
+        "endpoint": "/sharp/api/mastercontract/add"
+    }
+
+    ,
+    {
+        "domain": "Bank",
+        "action": "AddBank",
+        "endpoint": "/sharp/api/bank/add"
+    }
+
+    ,
+    {
+        "domain": "Bank",
+        "action": "AddCreateDummyRecordsBank",
+        "endpoint": "/sharp/api/bank/add"
+    }
+    ,
+    {
+        "domain": "Run",
+        "action": "AddRun",
+        "endpoint": "/sharp/api/run/add"
+    }
+    ,
+    {
+        "domain": "Run",
+        "action": "AddViewRunUpdate",
+        "endpoint": "/sharp/api/run/update"
+    }
+    ,
+
+    {
+        "domain": "Run",
+        "action": "AddRunUpdate",
+        "endpoint": "/sharp/api/run/update"
+    }
+    ,
+    {
+        "domain": "RunGroupAssociation",
+        "action": "AddRunGroupAssociation",
+        "endpoint": "/sharp/api/rungroupassociation/add"
+    }
+    ,
+    {
+        "domain": "RunGroup",
+        "action": "AddRunGroup",
+        "endpoint": "/sharp/api/rungroup/add"
+    }
+    ,
+    {
+        "domain": "NIOpsProject",
+        "action": "AddNIOpsProject",
+        "endpoint": "/sharp/api/opsprojectcommon/post"
+    }
+    ,
+    {
+        "domain": "Contract",
+        "action": "AddContract",
+        "endpoint": "/sharp/api/contract/add?Version=2"
+    }
+    ,
+
+    {
+        "domain": "Contract",
+        "action": "Adduvw_CreateDummyRecordsContract_update",
+        "endpoint": "/sharp/api/contract/update?Version=2"
+    }
+    ,
+
+    {
+        "domain": "Contract",
+        "action": "AddCreateDummyRecordsContract",
+        "endpoint": "/sharp/api/contract/add?Version=2"
+    }
+    ,
+    {
+        "domain": "Contract_NCUnits",
+        "action": "AddContract_NCUnits",
+        "endpoint": "/sharp/api/contract/add?Version=2"
+    }
+    ,
+    {
+        "domain": "ContractHold",
+        "action": "AddContractHold",
+        "endpoint": "/sharp/api/hold/add"
+    }
+    ,
+    {
+        "domain": "Unit",
+        "action": "UpdateUnit",
+        "endpoint": "/sharp/api/unit/update?Version=2"
+    }
+    ,
+    {
+        "domain": "Contact",
+        "action": "AddContact",
+        "endpoint": "/sharp/api/contacts/add"
+    }
+    ,
+    
+    {
+        "domain": "Contact",
+        "action": "Updateuvw_ViewContact_Update",
+        "endpoint": "/sharp/api/contacts/update"
+    }
+    ,
+    {
+        "domain": "Contact",
+        "action": "UpdateContactUpdate_202109",
+        "endpoint": "/sharp/api/contacts/update"
+    }
+
+    ,
+    {
+        "domain": "NonBookedMODOppty",
+        "action": "AddNonBookedMODOppty",
+        "endpoint": "/sharp/api/project/add"
+    }
+    ,
+    {
+        "domain": "NonBookedNIOppty",
+        "action": "AddNonBookedNIOppty",
+        "endpoint": "/sharp/api/project/add"
+    }
+]

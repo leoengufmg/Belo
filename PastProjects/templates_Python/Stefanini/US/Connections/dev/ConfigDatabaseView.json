@@ -1,0 +1,6 @@
+{
+    "server" : "X.X.X.X",
+    "user" : "user",
+    "password":"password",
+    "database":"database"
+  }

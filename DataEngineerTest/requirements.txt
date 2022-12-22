@@ -1,0 +1,8 @@
+bs4
+requests
+pytest
+lxml
+numpy
+pandas
+pycodestyle
+openpyxl
