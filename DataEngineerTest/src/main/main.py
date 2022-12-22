@@ -16,17 +16,16 @@ logger = logging.getLogger(__name__)
 #logger.error('This is an error message')
 #logger.critical('This is a critical message')
 
+# formatter of logging
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-def formatting_logs():
-    # formatter of logging
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+# handler
+handler = logging.FileHandler('app.log')
+handler.setFormatter(formatter)
 
-    # handler
-    handler = logging.FileHandler('app.log')
-    handler.setFormatter(formatter)
+# add handler
+logger.addHandler(handler)
 
-    # add handler
-    logger.addHandler(handler)
 
 def get_page(url):
     '''
@@ -38,6 +37,7 @@ def get_page(url):
     Return:
         - object requested using requests library
     '''
+    logger.info('Starting the execution get_page...')
     headers = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -49,7 +49,7 @@ def get_page(url):
         'Referrer': 'https://google.com',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'
     }
-
+    logger.info('Finishing the execution get_page...')
     return requests.get(url, headers=headers)
 
 
@@ -122,6 +122,7 @@ def scrape_table_first_attempt(baseurl, tickerslist, tabslist):
     :param tabslist: list of features inside the page that need to scrap (list of string)
     :return: Data Frame with the requested output
     '''
+    logger.info('Starting the execution scrape_table_first_attempt...')
     # Set the current date and time
     scrape_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # Defining column name
@@ -144,16 +145,14 @@ def scrape_table_first_attempt(baseurl, tickerslist, tabslist):
             # print(scrape_date)
 
             # End date
-            '''
+
             if (tab == "financials") and (flag == 0):
                 try:
                     flag = 1
-                    table_EndDate = soup.find_all("div", class_="Ta(c) Py(6px) Bxz(bb) BdB Bdc($seperatorColor) Miw(120px) Miw(100px)--pnclg D(ib) Fw(b)")
-                    table_EndDate = table_EndDate[0].text
-                    #print(table_EndDate)
+                    enddate = soup.find_all("div", class_="Ta(c) Py(6px) Bxz(bb) BdB Bdc($seperatorColor) Miw(120px) Miw(100px)--pnclg D(ib) Fw(b)")
+                    enddate = enddate[0].text.replace("/", "-")
                 except:
                     print("An exception occurred")
-            '''
             table_field = soup.find_all("div", class_="D(tbr) fi-row Bgc($hoverBgColor):h")
             # Find the table containing the financial data
             for i in table_field:
@@ -170,7 +169,6 @@ def scrape_table_first_attempt(baseurl, tickerslist, tabslist):
                         value.append(j.text)
                     aux += 1
                     # Append End Date
-                enddate = scrape_date
                 value.append(enddate)
                 # value.append(table_EndDate.replace("/", "-"))
 
@@ -180,6 +178,7 @@ def scrape_table_first_attempt(baseurl, tickerslist, tabslist):
                 # Create a DataFrame with custom column labels
                 data.append(value)
     df = pd.DataFrame(data, columns=column_name)
+    logger.info('Finishing the execution scrape_table_first_attempt...')
     return df
 
 if __name__ == "__main__":
@@ -188,7 +187,7 @@ if __name__ == "__main__":
     # args = argparser.parse_args()
     # ticker = args.ticker
     # Set the tickers and fields to be scrapped
-    formatting_logs()
+    logger.info('Starting Main program!')
     tickers = ["JNJ", "BRK.B", "JPM", "MMM", "ABBV", "DIS", "T", "PG", "LOW", "CI"]
     fields = ["Operating Income", "Net Income From Continuing Operations", "Retained Earnings", "Change In Cash",
               "Net Borrowings"]
@@ -201,3 +200,4 @@ if __name__ == "__main__":
     writer = pd.ExcelWriter('Yahoo-Finance-Scrape-' + date + '.xlsx')
     df_result.to_excel(writer)
     writer.save()
+    logger.info('Finishing  Main program!')
