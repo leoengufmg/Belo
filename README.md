@@ -1,10 +1,10 @@
-Data Engineer Test 🔥
-Description:
+# Data Engineer Test 🔥
+## Description:
 The data science team would like to retrieve information on some blue chip companies.
 They found it on YahooFinance webpage and they know that the information that they
 want is not available in the YahooFinance’s API.
 
-Project Web Scraping
+## Project Web Scraping
 📗 Requirements
 To use this project it is necessary to have these basic requirements:
 Python 3.6.8 -- https://www.python.org/downloads/release/python-368/
@@ -29,7 +29,6 @@ Consider the following environment variables:
 
 🚩 Run Tests
 Run the unit tests and code coverage:
-
 pytest --cov=main src/tests/
 
 ✒ Authors ️
