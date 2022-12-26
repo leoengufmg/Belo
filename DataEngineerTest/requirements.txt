@@ -6,3 +6,4 @@ numpy
 pandas
 pycodestyle
 openpyxl
+selenium
